@@ -1,0 +1,370 @@
+{% extends "index.html" %} {% block view_cv %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: montserrat;
+        }
+
+        .container {
+            background-color: #f5f5f5 ; 
+            max-width: 800px;
+            margin: 40px auto;
+            height: 1300px;
+            padding: 10px;
+            box-shadow: 0 2em 30px rgba(0, 0, 0, 0.3);
+            align-items: start !important;
+        }
+
+        .header {
+            text-align: center;
+        }
+
+        .header #head {
+            display: block;
+            font-size: 2em;
+            margin-top:0;
+            margin-bottom: 0.67em;
+            margin-left: 0;
+            margin-right: 0;
+            font-weight: bold;
+        }
+
+        .header h3 {
+            text-transform: uppercase;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .main {
+            display: flex !important;
+            flex-wrap: wrap !important;
+        }
+
+        .left {
+            flex: 1 !important;
+            padding: 30px !important;
+        }
+
+        .left p {
+            line-height: 1 !important;
+        }
+
+        .left ul li {
+            line-height: 1 !important;
+        }
+
+        h2 {
+            padding: 5px !important;
+            padding: 5px !important;
+            color: #584d4d !important;
+            margin: 30px 0 !important;
+            text-decoration: underline !important;
+
+            font-size: 25px;
+            border-radius: 0 20px 20px 0 !important;
+        }
+
+        .right {
+            flex: 1 !important;
+            padding: 20px !important;
+        }
+
+        .right h3 {
+            margin-bottom: 5px !important;
+        }
+
+        .right ul li {
+            line-height: 1 !important;
+        }
+
+        .btn1 {
+            padding: 15px 15px !important;
+            font-size: 15px !important;
+            font-weight: bold !important;
+            background-color: rgb(106, 233, 106) !important;
+            border-radius: 10px !important;
+            margin-bottom: 20px !important;
+        }
+        .loader-wrapper {
+                --line-width: 5px !important;
+                --curtain-color: #f1faee !important;
+                --outer-line-color: #a8dadc !important;
+                --middle-line-color: #457b9d;
+                --inner-line-color: #1d3557;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 1000;
+            }
+
+            .loader {
+                display: block;
+                position: relative;
+                top: 50%;
+                left: 50%;
+                /*   transform: translate(-50%, -50%); */
+                width: 150px;
+                height: 150px;
+                margin: -75px 0 0 -75px;
+                border: var(--line-width) solid transparent;
+                border-top-color: var(--outer-line-color);
+                border-radius: 100%;
+                -webkit-animation: spin 2s linear infinite;
+                animation: spin 2s linear infinite;
+                z-index: 1001;
+            }
+
+            .loader:before {
+                content: "";
+                position: absolute;
+                top: 4px;
+                left: 4px;
+                right: 4px;
+                bottom: 4px;
+                border: var(--line-width) solid transparent;
+                border-top-color: var(--inner-line-color);
+                border-radius: 100%;
+                -webkit-animation: spin 3s linear infinite;
+                animation: spin 3s linear infinite;
+            }
+
+            .loader:after {
+                content: "";
+                position: absolute;
+                top: 14px;
+                left: 14px;
+                right: 14px;
+                bottom: 14px;
+                border: var(--line-width) solid transparent;
+                border-top-color: var(--middle-line-color);
+                border-radius: 100%;
+                -webkit-animation: spin 1.5s linear infinite;
+                animation: spin 1.5s linear infinite;
+            }
+
+            @-webkit-keyframes spin {
+                0% {
+                    -webkit-transform: rotate(0deg);
+                    -ms-transform: rotate(0deg);
+                    transform: rotate(0deg);
+                }
+                100% {
+                    -webkit-transform: rotate(360deg);
+                    -ms-transform: rotate(360deg);
+                    transform: rotate(360deg);
+                }
+            }
+            @keyframes spin {
+                0% {
+                    -webkit-transform: rotate(0deg);
+                    -ms-transform: rotate(0deg);
+                    transform: rotate(0deg);
+                }
+                100% {
+                    -webkit-transform: rotate(360deg);
+                    -ms-transform: rotate(360deg);
+                    transform: rotate(360deg);
+                }
+            }
+
+            .loader-wrapper .loader-section {
+                position: fixed;
+                top: 0;
+                background: var(--curtain-color);
+                width: 51%;
+                height: 100%;
+                z-index: 1000;
+            }
+
+            .loader-wrapper .loader-section.section-left {
+                left: 0;
+            }
+            .loader-wrapper .loader-section.section-right {
+                right: 0;
+            }
+
+            /* Loaded Styles */
+            .loaded .loader-wrapper .loader-section.section-left {
+                transform: translateX(-100%);
+                transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+            }
+            .loaded .loader-wrapper .loader-section.section-right {
+                transform: translateX(100%);
+                transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+            }
+            .loaded .loader {
+                opacity: 0;
+                transition: all 0.3s ease-out;
+            }
+            .loaded .loader-wrapper {
+                visibility: hidden;
+                transform: translateY(-100%);
+                transition: all 0.3s 1s ease-out;
+            }
+        
+    </style>
+
+    <body>
+        <div class="loader-wrapper">
+            <div class="loader"></div>
+            <div class="loader-section section-left"></div>
+            <div class="loader-section section-right"></div>
+        </div>
+        <h1 style="text-align: center; color: rgb(5, 13, 5); font-size: 40px">CV Ready!!</h1>
+        <div id="mn" class="container">
+            <div class="header">
+                <br /><br />
+                <p id="head">{{name}}</p>
+                <h3>{{about}}</h3>
+            </div>
+            <div class="main">
+                <div class="left">
+                    <h2>Personal Information</h2>
+                    <p><strong>Name :</strong>{{name}}</p>
+                    <p><strong>Age :</strong>{{age}}</p>
+                    <p><strong>Email</strong> {{email}}</p>
+                    <p><strong>Phone</strong> +91-{{phone}}</p>
+                    <h2>Skills</h2>
+                    <ul>
+                        <li>{{skill1}}</li>
+                        <li>{{skill2}}</li>
+                        <li>{{skill3}}</li>
+                        <li>{{skill4}}</li>
+                        <li>{{skill5}}</li>
+                    </ul>
+                    <h2>Education</h2>
+                    <h3>{{degree1}}</h3>
+                    <p>{{college1}}</p>
+                    <p>{{year1}}</p>
+                    <br />
+                    <h3>{{degree2}}</h3>
+                    <p>{{college2}}</p>
+                    <p>{{year2}}</p>
+                    <h3>{{degre3}}</h3>
+                    <p>{{college3}}</p>
+                    <p>{{year3}}</p>
+                    <h2>Languages</h2>
+                    <ul>
+                        <li>{{lang1}}</li>
+                        <li>{{lang2}}</li>
+                        <li>{{lang3}}</li>
+                    </ul>
+                </div>
+                <div class="right">
+                    <h2>Projects</h2>
+                    <h3>{{project1}}</h3>
+                    <p><strong>Duration :</strong> {{durat1}}</p>
+                    <ul>
+                        <li>{{desc1}}</li>
+                    </ul>
+                    <br />
+                    <h3>{{project2}}</h3>
+                    <p><strong>Duration :</strong> {{durat2}}</p>
+                    <ul>
+                        <li>{{desc2}}</li>
+                    </ul>
+                    <h2>Work Experinece</h2>
+                    <h3>{{company1}}</h3>
+                    <p><strong>Position:</strong> {{post1}}</p>
+                    <p><strong>Duration :</strong> {{duration1}}</p>
+                    <ul>
+                        <li>{{lin11}}</li>
+                    </ul>
+                    <br /><br />
+                    <h3>{{company2}}</h3>
+                    <p><strong>Position: </strong>{{post2}}</p>
+                    <p><strong>Duration</strong> {{duration2}}</p>
+                    <ul>
+                        <li>{{lin21}}</li>
+                    </ul>
+                    <h2>Achievements :</h2>
+                    <ul>
+                        <li>{{ach1}}</li>
+                        <li>{{ach2}}</li>
+                        <li>{{ach3}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <button onclick="history.back()" type="button" class="btn btn-primary btn-lg">Back to Edit</button>
+        <button onclick="generatePDF('mn')" type="button" class="btn1">Download PDF</button>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.0/mammoth.browser.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+
+        <script type="text/javascript">
+            function generatePDF(containerId) {
+                const container = document.getElementById(containerId);
+
+                // Ensure the container exists
+                if (!container) {
+                    console.error(`No element found with id ${containerId}`);
+                    return;
+                }
+
+                // Set the PDF options
+                const pdfOptions = {
+                    margin: 0,
+                    filename: "resume.pdf",
+                    image: { type: "jpeg", quality: 0.98 },
+                    html2canvas: { scale: 3 },
+                    jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+                };
+
+                // Use html2pdf to generate the PDF
+                html2pdf()
+                    .from(container)
+                    .set(pdfOptions)
+                    .toPdf()
+                    .get("pdf")
+                    .then(function (pdf) {
+                        // Create a Blob from the PDF
+                        const pdfBlob = pdf.output("blob");
+
+                        // Create a URL for the Blob
+                        const pdfUrl = URL.createObjectURL(pdfBlob);
+
+                        // Create a link element
+                        const pdfLink = document.createElement("a");
+                        pdfLink.href = pdfUrl;
+                        pdfLink.download = "resume.pdf";
+
+                        // Append the link to the body
+                        document.body.appendChild(pdfLink);
+
+                        // Programmatically click the link to trigger the download
+                        pdfLink.click();
+
+                        // Remove the link from the document
+                        document.body.removeChild(pdfLink);
+
+                        // Clean up the URL object
+                        URL.revokeObjectURL(pdfUrl);
+                    })
+                    .catch(function (err) {
+                        console.error("Error generating PDF:", err);
+                    });
+            }
+
+         
+            // For Live Projects
+            window.addEventListener("load", function () {
+                document.querySelector("body").classList.add("loaded");
+            });
+        
+        </script>
+    </body>
+</html>
+{% endblock %}
